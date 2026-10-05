@@ -1,0 +1,3 @@
+/target/
+/sql/
+/src/main/resources/db.properties

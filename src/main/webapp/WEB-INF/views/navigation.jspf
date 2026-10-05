@@ -1,0 +1,29 @@
+<%@ page import="ui.UserInfo,java.math.BigDecimal,java.text.NumberFormat,java.util.Locale" %>
+<%!
+    private String escapeHtml(String text) {
+        if (text == null) {
+            return "";
+        }
+        return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                .replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    private String formatPrice(BigDecimal price) {
+        NumberFormat format = NumberFormat.getNumberInstance(new Locale("sv", "SE"));
+        format.setMinimumFractionDigits(2);
+        format.setMaximumFractionDigits(2);
+        return format.format(price);
+    }
+%>
+<nav aria-label="Huvudmeny">
+    <a href="index.jsp">Startsida</a> |
+    <a href="products.jsp">Produkter</a> |
+    <a href="cart.jsp">Shoppingkorg</a>
+    <% UserInfo navigationUser = (UserInfo) session.getAttribute("user"); %>
+    <% if (navigationUser != null) { %>
+        <p>Inloggad som <strong><%= escapeHtml(navigationUser.getUsername()) %></strong></p>
+        <a href="logout.jsp">Logga ut</a>
+    <% } else { %>
+        | <a href="login.jsp">Logga in</a>
+    <% } %>
+</nav>
